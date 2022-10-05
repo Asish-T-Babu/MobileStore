@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'insert' %}">Sign Up</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'login' %}">Sign In</a>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div class="card border-0 shadow rounded-3 my-5">
+            <div class="card-body p-4 p-sm-5">
+              <h5 class="card-title text-center mb-5 fw-light fs-5">Register</h5>
+              <form method="post" name="myForm">
+                   {% csrf_token %}
+                  <div class="form-floating mb-3">
+                    <input type="text" name="name" class="form-control" id="floatingInput" placeholder="Name" >
+                    <label for="floatingInput">Name</label>
+                    <span id="name_err" style="color:red">{% block n_err %}{% endblock %}</span>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="email" name="email" class="form-control" id="floatingInput1" placeholder="Email" >
+                    <label for="floatingInput1">Email</label>
+                    <span id="email_err" style="color:red">{% block e_err %}{% endblock %}</span>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="text" name="phone" class="form-control" id="floatingInput5" placeholder="Phone">
+                    <label for="floatingInput5">Phone</label>
+                    <span id="phone_err" style="color:red">{% block ph_err %}{% endblock %}</span>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="text" name="username" class="form-control" id="floatingInput2" placeholder="Username" >
+                    <label for="floatingInput2">Username</label>
+                    <span id="uname_err" style="color:red">{% block u_err %}{% endblock %}</span>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="password" name="password" class="form-control" id="floatingInput3" placeholder="Password" >
+                    <label for="floatingInput3">Password</label>
+                    <span id="password_err" style="color:red">{% block p_err %}{% endblock %}</span>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="text" name="referal_code" class="form-control" id="floatingInput4" placeholder="Password" >
+                    <label for="floatingInput4">Referal Code</label>
+                    <span id="referal_err" style="color:red">{% block r_err %}{% endblock %}</span>
+                    <span style="color:red">{% for i in messages %}{{i}}{% endfor %}</span>
+                  </div>
+                <div class="d-grid">
+                  <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" onclick="return validate();">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+    function validate(){
+    var name = document.myForm.name.value;
+    var email = document.myForm.email.value;
+    var username = document.myForm.username.value;
+    var password = document.myForm.password.value;
+    var text;
+    if(name.length < 3 || name.startsWith(" ") || !isNaN(name)){
+      text = "Please Enter valid Name";
+      document.getElementById('name_err').innerText = text
+      return false;
+    }
+    else{
+      text = null;
+      document.getElementById('name_err').innerText = text
+    }
+  
+  
+    if(email.indexOf("@") == -1 || email.length < 6 || email.startsWith(" ")){
+      text = "Please Enter valid Email";
+      document.getElementById('email_err').innerText = text
+      return false;
+    }
+    else{
+      text = null;
+      document.getElementById('email_err').innerText = text
+    }
+
+    if(username.length < 1||username.startsWith(" ")){
+      text = "Please Enter a Username";
+      document.getElementById('uname_err').innerText = text
+      return false;
+    }
+    else{
+      text = null;
+      document.getElementById('uname_err').innerText = text
+    }
+
+    
+  }
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>

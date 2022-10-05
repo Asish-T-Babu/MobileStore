@@ -1,0 +1,130 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>Bootstrap Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+
+    <!-- Example Code -->
+    
+    <div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text- min-vh-100">
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">Menu</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center text-primary align-items-sm-start" id="menu">
+                  <li class="nav-item">
+                    <a href="{% url 'admin_home' %}" class="nav-link align-middle px-0">
+                        <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_view_users' %}" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline text-success">User</span></a>
+                </li>
+                <li>
+                  <a href="{% url 'view_categories' %}" class="nav-link align-middle px-0">
+                      <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Category</span></a>
+                  </li>
+                <li>
+                    <a href="{% url 'list_product' %}" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline text-success">Products</span> </a>
+                </li>
+                <li>
+                  <a href="{% url 'admin_order_management' %}" class="nav-link px-0 align-middle">
+                      <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline text-success">Orders</span> </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'view_coupan' %}" class="nav-link align-middle px-0">
+                    <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Coupan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'view_offers' %}" class="nav-link align-middle px-0">
+                  <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Offer</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'sales' %}" class="nav-link align-middle px-0">
+                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Sales</span>
+             </a>
+            </li>
+                </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                  <a href="{% url 'admin_logout' %}" class="nav-link px-0 align-middle">
+                      <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline text-success">Logout</span> </a>
+              </div>
+            </div>
+        </div>
+        <div class="col py-3">
+          <div class="d-flex justify-content-end">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Status
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="{% url 'filter_order' 'Confirmed' %}">Confirmed</a></li>
+                <li><a class="dropdown-item" href="{% url 'filter_order' 'Shipped' %}">Shipped</a></li>
+                <li><a class="dropdown-item" href="{% url 'filter_order' 'Out for Delivery' %}">Out for Delivery</a></li>
+                <li><a class="dropdown-item" href="{% url 'admin_order_management' %}">Canel Filter</a></li>
+              </ul>
+            </div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr align="center">
+                <th scope="col">Image</th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Total Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for i in data %}
+              <tr align="center">
+                <td><img src="{{ i.product.image1.url }}" height="180px" alt="" style= "width: 50%;" ></td>
+                <td>{{i.product.product_name}}</td>
+                <td>₹ {{i.product.price}}</td>
+                <td>₹ {% widthratio i.product.price 1 i.quantity %}</td>
+                <td>{{i.quantity}}</td>
+                {% if i.ordered is False %}
+                <td>{{ i.status }}</td> 
+                <td><button><a href="/admin_order_detailed_view/{{i.id}}" style="text-decoration: None;">View More</a></button>&nbsp;<button><a href="/admin_cancel_order/{{i.id}}" style="text-decoration: None;">Cancel</a></button></td>
+                {% elif i.ordered is True %}
+                <td>{{ "Cancelled" }}</td>
+                {% endif %}
+                
+              </tr>
+            {% endfor %}
+              
+            </tbody>
+          </table>
+        </div>
+    </div>
+</div>
+    
+    <!-- End Example Code -->
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+

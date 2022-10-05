@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>Bootstrap Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text- min-vh-100">
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">Menu</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center text-primary align-items-sm-start" id="menu">
+                  <li class="nav-item">
+                    <a href="{% url 'admin_home' %}" class="nav-link align-middle px-0">
+                        <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_view_users' %}" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline text-success">User</span></a>
+                </li>
+                <li>
+                <a href="{% url 'view_categories' %}" class="nav-link align-middle px-0">
+                    <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Category</span></a>
+                </li>
+                <li>
+                    <a href="{% url 'list_product' %}" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline text-success">Products</span> </a>
+                </li>
+                <li>
+                  <a href="{% url 'admin_order_management' %}" class="nav-link px-0 align-middle">
+                      <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline text-success">Orders</span> </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'view_coupan' %}" class="nav-link align-middle px-0">
+                    <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Coupan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'view_offers' %}" class="nav-link align-middle px-0">
+                  <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Offer</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'sales' %}" class="nav-link align-middle px-0">
+                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Sales</span>
+             </a>
+            </li>
+              </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                  <a href="{% url 'admin_logout' %}" class="nav-link px-0 align-middle">
+                      <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline text-success">Logout</span> </a>
+              </div>
+            </div>
+        </div>
+        <div class="col py-3">
+         
+          <div>
+            <canvas id="myChart"></canvas>
+          </div>
+         
+          
+        </div>
+    </div>
+</div>
+
+<div>
+  
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script>
+
+  const data = {
+    labels: {{ labels|safe }},
+    datasets: [{
+      label: 'Count',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: {{data}},
+    }]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {}
+  };
+</script>
+      <script>
+        const myChart = new Chart(
+          document.getElementById('myChart'),
+          config
+        );
+      </script>
+</body>
+</html>
+
+

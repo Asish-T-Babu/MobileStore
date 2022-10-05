@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>Bootstrap Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .select-wrap 
+{
+  border: 1px solid rgb(220, 220, 220);
+  border-radius: 4px;
+  margin-bottom: 10px;
+  padding: 0 5px 5px;
+  width:100%;
+  background-color:#fff;
+}
+
+.select-wrap label
+{
+  font-size:12px;
+  text-transform: uppercase;
+  color: #777;
+  padding: 2px 8px 0;
+}
+
+select
+{
+  background-color: #fff;
+  border:0px;
+}
+    </style>
+  </head>
+  <body>
+
+    <!-- Example Code -->
+    
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text- min-vh-100">
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">Menu</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center text-primary align-items-sm-start" id="menu">
+                  <li class="nav-item">
+                    <a href="{% url 'admin_home' %}" class="nav-link align-middle px-0">
+                        <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_view_users' %}" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline text-success">User</span></a>
+                </li>
+                <li>
+                  <a href="{% url 'view_categories' %}" class="nav-link align-middle px-0">
+                      <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Category</span></a>
+                  </li>
+                <li>
+                    <a href="{% url 'list_product' %}" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline text-success">Products</span> </a>
+                </li>
+                <li>
+                  <a href="{% url 'admin_order_management' %}" class="nav-link px-0 align-middle">
+                      <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline text-success">Orders</span> </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'view_coupan' %}" class="nav-link align-middle px-0">
+                    <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Coupan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'view_offers' %}" class="nav-link align-middle px-0">
+                  <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Offer</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'sales' %}" class="nav-link align-middle px-0">
+                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Sales</span>
+             </a>
+            </li>
+                </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                    <a href="{% url 'admin_logout' %}" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline text-success">Logout</span> </a>
+                </div>
+            </div>
+        </div>
+        <div class="col py-3">
+            <div class="container">
+                <div class="row">
+                  <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                    <div class="card border-0 shadow rounded-3 my-5">
+                      <div class="card-body p-4 p-sm-5">
+                        <h5 class="card-title text-center mb-5 fw-light fs-5">Add Product Offer</h5>
+                        <form method="post" name="myForm" enctype="multipart/form-data">
+                             {% csrf_token %}
+                             <div class="select-wrap">
+                                <label>Category</label>
+                                <select name="c_code" style="width: 100%;">
+                                    {% for i in category %}
+                                    <option value="{{i.id}}">{{i.product_name}}{{i.storage}}</option>
+                                    {% endfor%}
+                                </select>
+                              </div>
+                            <div class="form-floating mb-3">
+                                <input type="date" name="s_date" class="form-control" id="floatingInput1" placeholder="Start Date and Time" >
+                                <label for="floatingInput1">Start Date</label>
+                                <span id="name_err" style="color:red">{% block n_err %}{% endblock %}</span>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="date" name="e_date" class="form-control" id="floatingInput2" placeholder="End Date and Time" >
+                                <label for="floatingInput2">End Date</label>
+                                <span id="description_err" style="color:red">{% block des_err %}{% endblock %}</span>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" name="d_percentage" class="form-control" id="floatingInput4" min="0" max="70" placeholder="Discount Percentage" required>
+                                <label for="floatingInput4">Discount Percentage</label>
+                                <span id="ram_err" style="color:red">{% block ram_err %}{% endblock %}</span>
+                                <span style="color:rgb(23, 201, 0)">{% for i in messages %}{{i}}{% endfor %}</span>
+                            </div>
+                          <div class="d-grid">
+                            <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Submit</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+    
+    <!-- End Example Code -->
+  </body>
+  <script defer src="https://cdn.crop.guide/loader/l.js?c=XBMWRX"></script>
+
+</html>
+<!-- 
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="text" name="category" placeholder="category"><br>
+    <button name="submit">submit</button>
+     {% for messages in messages%}
+        <h3>{{messages}}</h3>
+    {% endfor %}
+</form> -->

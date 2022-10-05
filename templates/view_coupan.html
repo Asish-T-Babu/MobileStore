@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>Bootstrap Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+
+    <!-- Example Code -->
+    
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text- min-vh-100">
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">Menu</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center text-primary align-items-sm-start" id="menu">
+                  <li class="nav-item">
+                    <a href="{% url 'admin_home' %}" class="nav-link align-middle px-0">
+                        <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_view_users' %}" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline text-success">User</span></a>
+                </li>
+                <li>
+                  <a href="{% url 'view_categories' %}" class="nav-link align-middle px-0">
+                      <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Category</span></a>
+                  </li>
+                <li>
+                    <a href="{% url 'list_product' %}" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline text-success">Products</span> </a>
+                </li>
+                <li>
+                  <a href="{% url 'admin_order_management' %}" class="nav-link px-0 align-middle">
+                      <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline text-success">Orders</span> </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'view_coupan' %}" class="nav-link align-middle px-0">
+                    <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Coupan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'view_offers' %}" class="nav-link align-middle px-0">
+                  <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Offer</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'sales' %}" class="nav-link align-middle px-0">
+                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-success">Sales</span>
+             </a>
+            </li>
+                </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                    <a href="{% url 'admin_logout' %}" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline text-success">Logout</span> </a>
+                </div>
+            </div>
+        </div>
+        <div class="col py-3">
+          <div class="d-flex justify-content-end">
+            <h6><a href="{% url 'coupan_management' %}" class="text-danger">Add Coupon</a></h6>
+        </div>
+            {% if coupan %}
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                  <h1>Coupon</h1>
+                </div>
+              </nav>
+              <div class="row container">
+                {% for i in coupan %}
+                <div class="col-3"> 
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ i.coupan_code }}</h5>
+                          <p class="card-text">{{ i.discount_amount }} Rs Off</p>
+                          <p class="card-text">validity:<br>{{i.start_date_and_time}} <br> {{ i.end_date_and_time }}</p>
+                          <a  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalToggle{{ i.id }}" type="button">Delete</a>
+                          <div class="modal fade" id="exampleModalToggle{{ i.id }}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="d-flex justify-content-end">
+                                  <button type="button" class="btn-close py-2 px-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body container">
+                                 Do you want to delete Offer?
+                                </div>
+                                <div class="d-flex justify-content-end  py-2">
+                                    
+                                    <a href="/delete_coupan_offer/{{i.id}}" style="text-decoration: None;" class="px-4"><button class="btn btn-primary px-5">ok</button></a>
+                                </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+                
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+    
+    <!-- End Example Code -->
+  </body>
+  <script defer src="https://cdn.crop.guide/loader/l.js?c=XBMWRX"></script>
+
+</html>
+<!-- 
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="text" name="category" placeholder="category"><br>
+    <button name="submit">submit</button>
+     {% for messages in messages%}
+        <h3>{{messages}}</h3>
+    {% endfor %}
+</form> -->

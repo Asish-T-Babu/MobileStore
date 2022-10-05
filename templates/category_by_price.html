@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+  </head>
+  <body>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="memory" placeholder="memory"><br>
+        <label for="cars">category:</label>
+        <select name="category" >
+        {% for i in data %}
+        <option value="{{i.id}}">{{i.category_name}}</option>
+        {% endfor%}
+        </select>
+        <input type="file" name="img1">
+        <button name="submit">submit</button>
+        <!-- {% for messages in messages%}
+            <h3>{{messages}}</h3>
+        {% endfor %} -->
+    </form>
+  </body>
+</html>
