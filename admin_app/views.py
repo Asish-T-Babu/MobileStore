@@ -712,6 +712,3 @@ def export_to_pdf(request):
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
 
     return response
-
-def sales(request):
-    pass
